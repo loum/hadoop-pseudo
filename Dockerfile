@@ -1,7 +1,6 @@
 FROM ubuntu:xenial-20191212
 
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   wget \
   openssh-server \
   openjdk-8-jdk
