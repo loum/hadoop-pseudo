@@ -1,6 +1,6 @@
 #!/bin/sh
 
-/usr/sbin/sshd
+/usr/sbin/sshd -f ~/.ssh/sshd_config
 
 # Start NameNode daemon and DataNode daemon.
 /opt/hadoop/sbin/start-dfs.sh
