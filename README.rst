@@ -24,15 +24,11 @@ Get the code and change into the top level `git` project directory::
 
     Run all commands from the top-level directory of the `git` repository.
 
-<<<<<<< HEAD
 For first-time setup, get the `Makester project <https://github.com/loum/makester.git>`_::
 
     $ git submodule update --init
 
 Keep `Makester project <https://github.com/loum/makester.git>`_ up-to-date with::
-=======
-Get the `Makester project <https://github.com/loum/makester.git>`_::
->>>>>>> feature/add-makester
 
     $ git submodule update --remote --merge
 
@@ -66,11 +62,7 @@ Interact with Hadoop
 
 Run `hadoop` as the `hdfs` user::
 
-<<<<<<< HEAD
     $ docker exec hadoop-pseudo /opt/hadoop/bin/hdfs version
-=======
-    $ docker exec -ti hadoop-pseudo runuser -l hdfs -c "hdfs version"
->>>>>>> feature/add-makester
 
 Check the `Hadoop Command Reference <https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html>`_ for more.
 
