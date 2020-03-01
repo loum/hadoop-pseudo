@@ -21,4 +21,24 @@
         <name>fs.defaultFS</name>
         <value>hdfs://localhost:9000</value>
     </property>
+    <property>
+        <name>fs.s3a.endpoint</name>
+        <description>AWS S3 endpoint to connect to.</description>
+        <value>${env.OBJECT_STORE_ENDPOINT}</value>
+    </property>
+    <property>
+        <name>fs.s3a.access.key</name>
+        <description>AWS access key ID</description>
+        <value>${env.AWS_ACCESS_KEY}</value>
+    </property>
+    <property>
+        <name>fs.s3a.secret.key</name>
+        <description>AWS secret key.</description>
+        <value>${env.AWS_SECRET_KEY}</value>
+    </property>
+    <property>
+        <name>fs.s3a.path.style.access</name>
+        <description>Enable S3 path style access</description>
+        <value>true</value>
+    </property>
 </configuration>

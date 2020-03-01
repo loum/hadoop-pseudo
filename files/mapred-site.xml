@@ -19,7 +19,7 @@
 <configuration>
     <property>
         <name>mapreduce.framework.name</name>
-        <value>yarn-tez</value>
+        <value>yarn</value>
     </property>
     <property>
         <name>mapreduce.application.classpath</name>
