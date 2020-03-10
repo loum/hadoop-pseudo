@@ -62,7 +62,7 @@ Interact with Hadoop
 
 Run `hadoop` as the `hdfs` user::
 
-    $ docker exec hadoop-pseudo runuser -l hdfs -c "hdfs version"
+    $ docker exec hadoop-pseudo /opt/hadoop/bin/hdfs version
 
 Check the `Hadoop Command Reference <https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html>`_ for more.
 
