@@ -32,6 +32,10 @@ Keep `Makester project <https://github.com/loum/makester.git>`_ up-to-date with:
 
     $ git submodule update --remote --merge
 
+Setup the environment::
+
+    $ make init
+
 ************
 Getting Help
 ************
