@@ -4,6 +4,8 @@ Hadoop v3.2.1 - Pseudo Distributed
 
 Quick and easy way to get Hadoop running in pseudo distributed mode using docker.
 
+Docker image is based on `Ubuntu Bionic <https://hub.docker.com/_/ubuntu?tab=description>`_
+
 See `Hadoop docs <https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html#Configuration>`_ for more information.
 
 *************
@@ -51,6 +53,18 @@ Image Build
 ::
 
     $ make bi
+
+*********
+Image Tag
+*********
+
+To tag the image as ``latest``::
+
+    $ make tag
+
+Or to apply tagging convention using <hadoop-version>-<release-number>::
+
+    $ make tag MAKESTER__IMAGE_TAG=3.2.1-2
 
 *******************
 Start the Container

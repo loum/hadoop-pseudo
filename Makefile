@@ -1,4 +1,5 @@
 # Include overrides (must occur before include statements).
+MAKESTER__REPO_NAME := loum
 MAKESTER__CONTAINER_NAME := hadoop-pseudo
 
 include makester/makefiles/base.mk
