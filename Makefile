@@ -8,7 +8,10 @@ include makester/makefiles/python-venv.mk
 
 MAKESTER__RUN_COMMAND := $(DOCKER) run --rm -d\
  --name $(MAKESTER__CONTAINER_NAME)\
+ --publish 9000:9000\
+ --publish 9870:9870\
  --publish 8088:8088\
+ --publish 19888:19888\
  $(MAKESTER__SERVICE_NAME):$(HASH)
 
 init: makester-requirements
@@ -23,8 +26,13 @@ rmi: rm-image
 rm-image:
 	@$(DOCKER) rmi $(MAKESTER__SERVICE_NAME):$(HASH) || true
 
-controlled-run: run
-	@$(PYTHON) makester/scripts/backoff -d "Hadoop ResourceManager" -p 8088 localhost
+backoff:
+	@$(PYTHON) makester/scripts/backoff -d "Hadoop NameNode port" -p 9000 localhost
+	@$(PYTHON) makester/scripts/backoff -d "Hadoop NameNode web UI port" -p 9870 localhost
+	@$(PYTHON) makester/scripts/backoff -d "YARN ResourceManager web UI port" -p 8088 localhost
+	@$(PYTHON) makester/scripts/backoff -d "MapReduce JobHistory Server web UI port" -p 19888 localhost
+
+controlled-run: run backoff
 
 login:
 	@$(DOCKER) exec -ti $(MAKESTER__CONTAINER_NAME) bash || true
