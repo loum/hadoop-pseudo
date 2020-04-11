@@ -29,7 +29,7 @@ FROM ubuntu:bionic-20200311
 
 RUN apt-get update && apt-get install -y --no-install-recommends\
  openssh-server=1:7.6p1-4ubuntu0.3\
- openjdk-8-jdk=8u242-b08-0ubuntu3~18.04 &&\
+ openjdk-8-jdk-headless=8u242-b08-0ubuntu3~18.04 &&\
  apt-get clean &&\
  rm -rf /var/lib/apt/lists/*
 
