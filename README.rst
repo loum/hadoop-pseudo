@@ -45,7 +45,7 @@ For first-time setup, get the `Makester project <https://github.com/loum/makeste
 
 Keep `Makester project <https://github.com/loum/makester.git>`_ up-to-date with::
 
-    $ git submodule update --remote --merge
+    $ make submodule-update
 
 Setup the environment::
 
@@ -77,23 +77,11 @@ When you are ready to build the image::
 
     $ make bi
 
-*********
-Image Tag
-*********
+********************
+Interact with Hadoop
+********************
 
-To tag the image as ``latest``::
-
-    $ make tag
-
-Or to apply tagging convention using ``<hadoop-version>-<image-release-number>``::
-
-    $ make tag MAKESTER__IMAGE_TAG=3.2.1-2
-
-*******************
-Start the Container
-*******************
-
-::
+To start::
 
     $ make run
 
@@ -101,15 +89,15 @@ To start the container and wait for all Hadoop services to initiate::
 
     $ make controlled-run
 
-********************
-Interact with Hadoop
-********************
-
 Run ``hadoop`` as the ``hdfs`` user::
 
     $ docker exec hadoop-pseudo /opt/hadoop/bin/hdfs version
 
 Check the `Hadoop Command Reference <https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html>`_ for more.
+
+To stop::
+
+    $ make stop
 
 Web Interfaces
 ==============
@@ -120,10 +108,14 @@ The following web interfaces are available to view configurations and logs:
 - `YARN ResourceManager web UI <http://localhost:8088>`_
 - `MapReduce JobHistory Server web UI <http://localhost:19888>`_
 
-******************
-Stop the Container
-******************
+*********
+Image Tag
+*********
 
-::
+To tag the image as ``latest``::
 
-    $ make stop
+    $ make tag
+
+Or to apply tagging convention using ``<hadoop-version>-<image-release-number>``::
+
+    $ make tag MAKESTER__IMAGE_TARGET_TAG=3.2.1-3
