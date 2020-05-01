@@ -112,10 +112,6 @@ The following web interfaces are available to view configurations and logs:
 Image Tag
 *********
 
-To tag the image as ``latest``::
-
-    $ make tag
-
-Or to apply tagging convention using ``<hadoop-version>-<image-release-number>``::
+To apply tagging convention using ``<hadoop-version>-<image-release-number>``::
 
     $ make tag MAKESTER__IMAGE_TARGET_TAG=3.2.1-3
