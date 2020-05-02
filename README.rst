@@ -75,7 +75,7 @@ Hadoop configuration settings and project file mappings as follows:
 
 When you are ready to build the image::
 
-    $ make bi
+    $ make build-image
 
 ********************
 Interact with Hadoop
@@ -112,6 +112,23 @@ The following web interfaces are available to view configurations and logs:
 Image Tag
 *********
 
-To apply tagging convention using ``<hadoop-version>-<image-release-number>``::
+.. note::
 
-    $ make tag MAKESTER__IMAGE_TARGET_TAG=3.2.1-3
+    Search for existing tags with command::
+
+       $ make search-image
+
+To apply tag as per project tagging convention ``<hadoop-version>-<image-release-number>``::
+
+    $ make tag-version
+
+.. note::
+
+    Update versioning information in ``Makefile`` as follows:
+
+       - ``<hadoop-version>-<image-release-number>`` - ``MAKESTER__VERSION``
+       - ``<image-release-number>`` can be set via ``MAKESTER__RELEASE_NUMBER``
+
+To tag the image as ``latest``::
+
+    $ make tag-latest

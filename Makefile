@@ -1,13 +1,14 @@
-include makester/makefiles/base.mk
-include makester/makefiles/docker.mk
-include makester/makefiles/python-venv.mk
-
 MAKESTER__REPO_NAME = loum
-MAKESTER__CONTAINER_NAME = hadoop-pseudo
 
+# Tagging convention used: <hadoop-version>-<image-release-number>
 MAKESTER__VERSION = 3.2.1
 MAKESTER__RELEASE_NUMBER = 3
 
+include makester/makefiles/makester.mk
+include makester/makefiles/docker.mk
+include makester/makefiles/python-venv.mk
+
+MAKESTER__CONTAINER_NAME := hadoop-pseudo
 MAKESTER__RUN_COMMAND := $(DOCKER) run --rm -d\
  --name $(MAKESTER__CONTAINER_NAME)\
  --publish 9000:9000\
@@ -34,17 +35,9 @@ login:
 hadoop-version:
 	@$(DOCKER) exec -ti $(MAKESTER__CONTAINER_NAME) /opt/hadoop/bin/hadoop version || true
 
-vars:
-	@$(MAKE) -s print-MAKESTER__REPO_NAME\
- print-MAKESTER__IMAGE_TAG_ALIAS\
- print-MAKESTER__SERVICE_NAME\
- print-MAKESTER__VERSION\
- print-MAKESTER__RELEASE_NUMBER
-
 help: base-help docker-help python-venv-help
 	@echo "(Makefile)\n\
-  login:               Login to container $(MAKESTER__CONTAINER_NAME) as user \"hdfs\"\n\
-  hadoop-version:      Hadoop version in running container $(MAKESTER__CONTAINER_NAME)\"\n\
-	";
+  login                Login to container $(MAKESTER__CONTAINER_NAME) as user \"hdfs\"\n\
+  hadoop-version       Hadoop version in running container $(MAKESTER__CONTAINER_NAME)\"\n"
 
 .PHONY: help
