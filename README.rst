@@ -4,7 +4,7 @@ Hadoop v3.2.1 - Pseudo Distributed on Docker
 
 Quick and easy way to get Hadoop running in `pseudo-distributed <https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#Pseudo-Distributed_Operation>`_ mode using `Docker <https://docs.docker.com/install/>`_.
 
-Docker image is based on `Ubuntu Bionic <https://hub.docker.com/_/ubuntu?tab=description>`_
+Docker image is based on `Ubuntu Focal 20.04 LTS <https://hub.docker.com/_/ubuntu?tab=description>`_
 
 See `Hadoop docs <https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html#Configuration>`_ for more information.
 
@@ -108,27 +108,26 @@ The following web interfaces are available to view configurations and logs:
 - `YARN ResourceManager web UI <http://localhost:8088>`_
 - `MapReduce JobHistory Server web UI <http://localhost:19888>`_
 
-*********
-Image Tag
-*********
+***********************
+Docker Image Management
+***********************
 
-.. note::
+Image Searches
+==============
 
-    Search for existing tags with command::
+Search for existing Docker image tags with command::
 
-       $ make search-image
+  $ make search-image
+
+Image Tagging
+=============
+
+By default, ``makester`` will tag the new Docker image with the current branch hash.  This provides a degree of uniqueness but is not very intuitive.  That's where the ``tag-version`` ``Makefile`` target can help
 
 To apply tag as per project tagging convention ``<hadoop-version>-<image-release-number>``::
 
     $ make tag-version
 
-.. note::
-
-    Update versioning information in ``Makefile`` as follows:
-
-       - ``<hadoop-version>-<image-release-number>`` - ``MAKESTER__VERSION``
-       - ``<image-release-number>`` can be set via ``MAKESTER__RELEASE_NUMBER``
-
 To tag the image as ``latest``::
 
-    $ make tag-latest
+  $ make tag-latest

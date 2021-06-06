@@ -1,6 +1,7 @@
 ARG HADOOP_VERSION=3.2.1
+ARG UBUNTU_BASE_IMAGE=focal-20210416
 
-FROM ubuntu:bionic-20200311 AS downloader
+FROM ubuntu:$UBUNTU_BASE_IMAGE AS downloader
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
  wget\
@@ -25,12 +26,13 @@ RUN wget -P /tmp/jars https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/
 
 ### downloader layer end
 
-FROM ubuntu:bionic-20200311
+FROM ubuntu:$UBUNTU_BASE_IMAGE
 
+ARG OPENSSH_SERVER=1:8.2p1-4ubuntu0.2
+ARG OPENJDK_8_HEADLESS=8u292-b10-0ubuntu1~20.04
 RUN apt-get update && apt-get install -y --no-install-recommends\
- openssh-server=1:7.6p1-4ubuntu0.3\
- openjdk-8-jdk-headless=8u242-b08-0ubuntu3~18.04 &&\
- apt-get clean &&\
+ openssh-server=$OPENSSH_SERVER\
+ openjdk-8-jdk-headless=$OPENJDK_8_HEADLESS &&\
  rm -rf /var/lib/apt/lists/*
 
 ARG HADOOP_VERSION
