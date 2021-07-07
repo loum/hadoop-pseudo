@@ -1,133 +1,108 @@
-############################################
-Hadoop v3.2.1 - Pseudo Distributed on Docker
-############################################
+# Hadoop v3.2.2: Pseudo Distributed on Docker
+- [Overview](#Overview)
+- [Quick Links](#Quick-Links)
+- [Quick Start](#Quick-Start)
+- [Prerequisites](#Prerequisites)
+- [Getting Started](#Getting-Started)
+- [Getting Help](#Getting-Help)
+- [Docker Image Management](#Docker-Image-Management)
+	- [Image Build](#Image-Build)
+		- [Configuration](#Configuration)
+	- [Image Searches](#Image-Searches)
+	- [Image Tagging](#Image-Tagging)
+- [Interact with Hadoop](#Interact-with-Hadoop)
+- [Web Interfaces](#Web-Interfaces)
 
-Quick and easy way to get Hadoop running in `pseudo-distributed <https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#Pseudo-Distributed_Operation>`_ mode using `Docker <https://docs.docker.com/install/>`_.
+## Overview
+Quick and easy way to get Hadoop running in [pseudo-distributed](https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/SingleCluster.html#Pseudo-Distributed_Operation) mode using [Docker](https://docs.docker.com/install/).
 
-Docker image is based on `Ubuntu Focal 20.04 LTS <https://hub.docker.com/_/ubuntu?tab=description>`_
+Docker image is based on [Ubuntu Focal 20.04 LTS](https://hub.docker.com/_/ubuntu?tab=description).
 
-See `Hadoop docs <https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html#Configuration>`_ for more information.
+See [Hadoop docs](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html#Configuration) for more information.
+## Quick Links
+- [Hadoop 3.2.2](https://hadoop.apache.org/release/3.2.2.html)
 
-************
-Quick Start
-************
+## Quick Start
+Impatient and just want Hadoop quickly?:
+```
+docker run --rm -ti --name hadoop-pseudo loum/hadoop-pseudo:latest
+```
+> **_NOTE:_** More at https://hub.docker.com/r/loum/hadoop-pseudo
 
-Impatient and just want Hadoop quickly?::
+## Prerequisites
+- [Docker](https://docs.docker.com/install/)
+- [GNU make](https://www.gnu.org/software/make/manual/make.html)
 
-    $ docker run --rm -ti -d \
-     --name hadoop-pseudo \
-     loum/hadoop-pseudo:latest
+## Getting Started
+Get the code and change into the top level `git` project directory:
+```
+git clone https://github.com/loum/hadoop-pseudo.git && cd hadoop-pseudo
+```
+> **_NOTE:_** Run all commands from the top-level directory of the `git` repository.
 
-More at `<https://hub.docker.com/r/loum/hadoop-pseudo>`_
-
-*************
-Prerequisites
-*************
-
-- `Docker <https://docs.docker.com/install/>`_
-- `GNU make <https://www.gnu.org/software/make/manual/make.html>`_
-
-***************
-Getting Started
-***************
-
-Get the code and change into the top level ``git`` project directory::
-
-    $ git clone https://github.com/loum/hadoop-pseudo.git && cd hadoop-pseudo
-
-.. note::
-
-    Run all commands from the top-level directory of the ``git`` repository.
-
-For first-time setup, get the `Makester project <https://github.com/loum/makester.git>`_::
-
-    $ git submodule update --init
-
-Keep `Makester project <https://github.com/loum/makester.git>`_ up-to-date with::
-
-    $ make submodule-update
-
-Setup the environment::
-
-    $ make init
-
-************
-Getting Help
-************
-
-There should be a ``make`` target to be able to get most things done.  Check the help for more information::
-
-    $ make help
-
-***********
-Image Build
-***********
-
-Configuration
-=============
-
+For first-time setup, prime the [Makester project](https://github.com/loum/makester.git):
+```
+git submodule update --init
+```
+Keep [Makester project](https://github.com/loum/makester.git) up-to-date with:
+```
+make submodule-update
+```
+Setup the environment:
+```
+make init
+```
+## Getting Help
+There should be a `make` target to be able to get most things done.  Check the help for more information:
+```
+make help
+```
+## Docker Image Management
+### Image Build
+When you are ready to build the image:
+```
+make build-image
+```
+#### Configuration
 Hadoop configuration settings and project file mappings as follows:
+- [Hadoop core-default.xml](https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-common/core-default.xml) | [Image core-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/core-site.xml)
+- [Hadoop hdfs-default.xml](https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-common/hdfs-default.xml) | [Image hdfs-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml)
+- [Hadoop mapred-default.xml](https://hadoop.apache.org/docs/r3.2.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml) | [Image hdfs-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml)
+- [Hadoop yarn-default.xml](https://hadoop.apache.org/docs/r3.2.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml) | [Image yarn-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/yarn-site.xml)
 
-- `Hadoop core-default.xml <https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-common/core-default.xml>`_ | `Image core-site.xml <https://github.com/loum/hadoop-pseudo/blob/master/files/core-site.xml>`_
-- `Hadoop hdfs-default.xml <https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-common/hdfs-default.xml>`_ | `Image hdfs-site.xml <https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml>`_
-- `Hadoop mapred-default.xml <https://hadoop.apache.org/docs/r3.2.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml>`_ | `Image hdfs-site.xml <https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml>`_
-- `Hadoop yarn-default.xml <https://hadoop.apache.org/docs/r3.2.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml>`_ | `Image yarn-site.xml <https://github.com/loum/hadoop-pseudo/blob/master/files/yarn-site.xml>`_
+### Image Searches
+Search for existing Docker image tags with command:
+```
+make search-image
+```
+### Image Tagging
+By default, `makester` will tag the new Docker image with the current branch hash.  This provides a degree of uniqueness but is not very intuitive.  That's where the `tag-version` `Makefile` target can help.  To apply tag as per project tagging convention `<hadoop-version>-<image-release-number>`
+```
+make tag-version
+```
+To tag the image as `latest`
+```
+make tag-latest
+```
+## Interact with Hadoop
+To start the container and wait for all Hadoop services to initiate:
+```
+make controlled-run
+```
+Run `hadoop` as the `hdfs` user:
+```
+docker exec hadoop-pseudo /opt/hadoop/bin/hdfs version
+```
+Check the [Hadoop Command Reference](https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html) for more.
 
-When you are ready to build the image::
-
-    $ make build-image
-
-********************
-Interact with Hadoop
-********************
-
-To start::
-
-    $ make run
-
-To start the container and wait for all Hadoop services to initiate::
-
-    $ make controlled-run
-
-Run ``hadoop`` as the ``hdfs`` user::
-
-    $ docker exec hadoop-pseudo /opt/hadoop/bin/hdfs version
-
-Check the `Hadoop Command Reference <https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-hdfs/HDFSCommands.html>`_ for more.
-
-To stop::
-
-    $ make stop
-
-Web Interfaces
-==============
-
+To stop:
+```
+make stop
+```
+## Web Interfaces
 The following web interfaces are available to view configurations and logs:
+- Hadoop NameNode web UI: http://localhost:9870
+- YARN ResourceManager web UI: http://localhost:8088
+- MapReduce JobHistory Server web UI: http://localhost:19888
 
-- `Hadoop NameNode web UI <http://localhost:9870>`_
-- `YARN ResourceManager web UI <http://localhost:8088>`_
-- `MapReduce JobHistory Server web UI <http://localhost:19888>`_
-
-***********************
-Docker Image Management
-***********************
-
-Image Searches
-==============
-
-Search for existing Docker image tags with command::
-
-  $ make search-image
-
-Image Tagging
-=============
-
-By default, ``makester`` will tag the new Docker image with the current branch hash.  This provides a degree of uniqueness but is not very intuitive.  That's where the ``tag-version`` ``Makefile`` target can help
-
-To apply tag as per project tagging convention ``<hadoop-version>-<image-release-number>``::
-
-    $ make tag-version
-
-To tag the image as ``latest``::
-
-  $ make tag-latest
+[top](#Hadoop-v3.2.2:-Pseudo-Distributed-on-Docker)
