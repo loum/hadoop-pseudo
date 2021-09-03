@@ -6,10 +6,10 @@
 - [Getting Started](#Getting-Started)
 - [Getting Help](#Getting-Help)
 - [Docker Image Management](#Docker-Image-Management)
-	- [Image Build](#Image-Build)
-		- [Configuration](#Configuration)
-	- [Image Searches](#Image-Searches)
-	- [Image Tagging](#Image-Tagging)
+  - [Image Build](#Image-Build)
+    - [Configuration](#Configuration)
+  - [Image Searches](#Image-Searches)
+  - [Image Tagging](#Image-Tagging)
 - [Interact with Hadoop](#Interact-with-Hadoop)
 - [Web Interfaces](#Web-Interfaces)
 
@@ -53,7 +53,7 @@ Setup the environment:
 make init
 ```
 ## Getting Help
-There should be a `make` target to be able to get most things done.  Check the help for more information:
+There should be a `make` target to get most things done.  Check the help for more information:
 ```
 make help
 ```
@@ -65,10 +65,10 @@ make build-image
 ```
 #### Configuration
 Hadoop configuration settings and project file mappings as follows:
-- [Hadoop core-default.xml](https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-common/core-default.xml) | [Image core-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/core-site.xml)
-- [Hadoop hdfs-default.xml](https://hadoop.apache.org/docs/r3.2.1/hadoop-project-dist/hadoop-common/hdfs-default.xml) | [Image hdfs-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml)
-- [Hadoop mapred-default.xml](https://hadoop.apache.org/docs/r3.2.1/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml) | [Image hdfs-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml)
-- [Hadoop yarn-default.xml](https://hadoop.apache.org/docs/r3.2.1/hadoop-yarn/hadoop-yarn-common/yarn-default.xml) | [Image yarn-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/yarn-site.xml)
+- [Hadoop core-default.xml](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/core-default.xml) | [Image core-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/core-site.xml)
+- [Hadoop hdfs-default.xml](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml) | [Image hdfs-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml)
+- [Hadoop mapred-default.xml](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml) | [Image hdfs-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml)
+- [Hadoop yarn-default.xml](https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-common/yarn-default.xml) | [Image yarn-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/yarn-site.xml)
 
 ### Image Searches
 Search for existing Docker image tags with command:

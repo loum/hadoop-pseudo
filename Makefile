@@ -6,15 +6,15 @@ HADOOP_VERSION := 3.2.2
 
 # Tagging convention used: <hadoop-version>-<image-release-number>
 MAKESTER__VERSION = $(HADOOP_VERSION)
-MAKESTER__RELEASE_NUMBER = 1
+MAKESTER__RELEASE_NUMBER = 2
 
 include makester/makefiles/makester.mk
 include makester/makefiles/docker.mk
 include makester/makefiles/python-venv.mk
 
-UBUNTU_BASE_IMAGE := focal-20210609
+UBUNTU_BASE_IMAGE := focal-20210827
 OPENJDK_8_HEADLESS := 8u292-b10-0ubuntu1~20.04
-OPENSSH_SERVER := 1:8.2p1-4ubuntu0.2
+OPENSSH_SERVER := 1:8.2p1-4ubuntu0.3
 
 MAKESTER__BUILD_COMMAND = $(DOCKER) build --rm\
  --no-cache\

@@ -19,10 +19,12 @@ WORKDIR /tmp/jars
 RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar
 
 # Other jars needed for s3a connectors.
-RUN wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.11.734/aws-java-sdk-1.11.734.jar &&\
- wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-core/1.11.734/aws-java-sdk-core-1.11.734.jar &&\
- wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-dynamodb/1.11.734/aws-java-sdk-dynamodb-1.11.734.jar &&\
- wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-s3/1.11.734/aws-java-sdk-s3-1.11.734.jar &&\
+RUN wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.12.60/aws-java-sdk-1.12.60.jar &&\
+ wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-core/1.12.60/aws-java-sdk-core-1.12.60.jar &&\
+ wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-dynamodb/1.12.60/aws-java-sdk-dynamodb-1.12.60.jar &&\
+ wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-s3/1.12.60/aws-java-sdk-s3-1.12.60.jar &&\
+ wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-s3/1.12.60/aws-java-sdk-s3-1.12.60.jar &&\
+ wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-sts/1.12.60/aws-java-sdk-sts-1.12.60.jar &&\
  wget https://repo1.maven.org/maven2/joda-time/joda-time/2.10.5/joda-time-2.10.5.jar &&\
  wget https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.11/httpclient-4.5.11.jar
 
@@ -46,7 +48,6 @@ RUN ln -s /opt/hadoop-$HADOOP_VERSION $HADOOP_HOME
 ARG HADOOP_LIBS=$HADOOP_HOME/share/hadoop/common/lib
 # Remove dated httpclient* jars
 RUN rm $HADOOP_LIBS/httpclient* 2>/dev/null
-COPY --from=downloader /tmp/jars/* $HADOOP_LIBS/
 
 ARG HADOOP_USER=hdfs
 ARG HADOOP_GROUP=hdfs
@@ -55,6 +56,8 @@ RUN addgroup $HADOOP_GROUP &&\
  --gid $HADOOP_GROUP\
  --shell /bin/bash\
  $HADOOP_USER
+
+COPY --from=downloader --chown=$HADOOP_USER:$HADOOP_GROUP /tmp/jars/* $HADOOP_LIBS/
 
 WORKDIR /var/log/hadoop
 RUN chown $HADOOP_USER:$HADOOP_GROUP /var/log/hadoop
