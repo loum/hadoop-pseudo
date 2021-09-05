@@ -2,11 +2,11 @@
 
 MAKESTER__REPO_NAME := loum
 
-HADOOP_VERSION := 3.2.2
+HADOOP_VERSION := 3.3.1
 
 # Tagging convention used: <hadoop-version>-<image-release-number>
 MAKESTER__VERSION = $(HADOOP_VERSION)
-MAKESTER__RELEASE_NUMBER = 2
+MAKESTER__RELEASE_NUMBER = 1
 
 include makester/makefiles/makester.mk
 include makester/makefiles/docker.mk
