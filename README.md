@@ -1,4 +1,4 @@
-# Hadoop v3.2.2: Pseudo Distributed on Docker
+# Hadoop: Pseudo Distributed on Docker
 - [Overview](#Overview)
 - [Quick Links](#Quick-Links)
 - [Quick Start](#Quick-Start)
@@ -64,11 +64,11 @@ When you are ready to build the image:
 make build-image
 ```
 #### Configuration
-Hadoop configuration settings and project file mappings as follows:
-- [Hadoop core-default.xml](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/core-default.xml) | [Image core-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/core-site.xml)
-- [Hadoop hdfs-default.xml](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml) | [Image hdfs-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml)
-- [Hadoop mapred-default.xml](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml) | [Image hdfs-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/hdfs-site.xml)
-- [Hadoop yarn-default.xml](https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-common/yarn-default.xml) | [Image yarn-site.xml](https://github.com/loum/hadoop-pseudo/blob/master/files/yarn-site.xml)
+Every Hadoop configuration settings can be overridden during container startup by tagetting the setting name an prepending the configuration file context as per the following:
+- [Hadoop core-default.xml](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/core-default.xml) | Override with `CORE_SITE__<setting>`
+- [Hadoop hdfs-default.xml](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml) | Override token `HDFS_SITE__<setting>`
+- [Hadoop mapred-default.xml](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml) | Override with `MAPRED_SITE__<setting>`
+- [Hadoop yarn-default.xml](https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-common/yarn-default.xml) | Override with `YARN_SITE__<setting>`
 
 ### Image Searches
 Search for existing Docker image tags with command:
@@ -105,4 +105,4 @@ The following web interfaces are available to view configurations and logs:
 - YARN ResourceManager web UI: http://localhost:8088
 - MapReduce JobHistory Server web UI: http://localhost:19888
 
-[top](#Hadoop-v3.2.2:-Pseudo-Distributed-on-Docker)
+[top](#Hadoop:-Pseudo-Distributed-on-Docker)

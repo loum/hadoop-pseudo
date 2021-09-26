@@ -34,7 +34,12 @@ FROM ubuntu:$UBUNTU_BASE_IMAGE
 
 ARG OPENSSH_SERVER
 ARG OPENJDK_8_HEADLESS
+ARG PYTHON3_VERSION
+ARG PYTHON3_PIP
 RUN apt-get update && apt-get install -y --no-install-recommends\
+ python3.8=$PYTHON3_VERSION\
+ python3-pip=$PYTHON3_PIP\
+ python-is-python3\
  openssh-server=$OPENSSH_SERVER\
  openjdk-8-jdk-headless=$OPENJDK_8_HEADLESS &&\
  rm -rf /var/lib/apt/lists/*
@@ -58,23 +63,16 @@ RUN addgroup $HADOOP_GROUP &&\
  $HADOOP_USER
 
 COPY --from=downloader --chown=$HADOOP_USER:$HADOOP_GROUP /tmp/jars/* $HADOOP_LIBS/
-
-WORKDIR /var/log/hadoop
-RUN chown $HADOOP_USER:$HADOOP_GROUP /var/log/hadoop
-RUN chown -R hdfs:hdfs /var/log/hadoop
+COPY --chown=$HADOOP_USER:$HADOOP_GROUP scripts/config-setter.py /
 
 WORKDIR $HADOOP_HOME
-RUN mv etc/hadoop/hadoop-env.sh etc/hadoop/hadoop-env.sh.orig &&\
- mv etc/hadoop/core-site.xml etc/hadoop/core-site.xml.orig &&\
- mv etc/hadoop/hdfs-site.xml etc/hadoop/hdfs-site.xml.orig &&\
- mv etc/hadoop/mapred-site.xml etc/hadoop/mapred-site.xml.orig &&\
- mv etc/hadoop/yarn-site.xml etc/hadoop/yarn-site.xml.orig
+RUN mv etc/hadoop/hadoop-env.sh etc/hadoop/hadoop-env.sh.orig
 
+COPY files/hdfs-site.xml.j2 etc/hadoop/hdfs-site.xml.j2
+COPY files/yarn-site.xml.j2 etc/hadoop/yarn-site.xml.j2
+COPY files/mapred-site.xml.j2 etc/hadoop/mapred-site.xml.j2
+COPY files/core-site.xml.j2 etc/hadoop/core-site.xml.j2
 COPY files/hadoop-env.sh etc/hadoop/hadoop-env.sh
-COPY files/core-site.xml etc/hadoop/core-site.xml
-COPY files/hdfs-site.xml etc/hadoop/hdfs-site.xml
-COPY files/mapred-site.xml etc/hadoop/mapred-site.xml
-COPY files/yarn-site.xml etc/hadoop/yarn-site.xml
 
 ARG object_store_endpoint=s3.amazonaws.com
 ENV OBJECT_STORE_ENDPOINT=${object_store_endpoint}
@@ -91,22 +89,31 @@ EXPOSE 8088
 # MapReduce JobHistory Server web UI.
 EXPOSE 19888
 
-COPY scripts/hadoop-bootstrap.sh /hadoop-bootstrap.sh
+WORKDIR /home/$HADOOP_USER/var/run
+WORKDIR /home/$HADOOP_USER/.ssh
+COPY files/sshd_config sshd_config
 
-USER $HADOOP_USER
-RUN bin/hdfs namenode -format
+WORKDIR /var/log/hadoop
+RUN chown -R $HADOOP_USER:$HADOOP_GROUP . $HADOOP_HOME
 
 WORKDIR /home/$HADOOP_USER
-RUN mkdir -pv .ssh var/run
-COPY files/sshd_config .ssh/sshd_config
 
 # Allow Setup passphraseless ssh for hadoop_user.
 RUN ssh-keygen -t rsa -f .ssh/ssh_host_rsa_key -N '' &&\
  ssh-keygen -t rsa -P '' -f .ssh/id_rsa &&\
- cat ~/.ssh/id_rsa.pub >> .ssh/authorized_keys &&\
+ cat .ssh/id_rsa.pub >> .ssh/authorized_keys &&\
  chmod 0600 .ssh/authorized_keys
+
+RUN chown -R $HADOOP_USER:$HADOOP_GROUP .
+
+USER $HADOOP_USER
 
 # Add Hadoop executables to HADOOP_USER PATH.
 RUN echo export PATH="$HADOOP_HOME/bin:$PATH" >> .bashrc
+
+# Need Jinja2 for config JIT dynamic settings during container create.
+RUN python -m pip install --user jinja2
+
+COPY --chown=$HADOOP_USER:$HADOOP_GROUP scripts/hadoop-bootstrap.sh /hadoop-bootstrap.sh
 
 CMD [ "/hadoop-bootstrap.sh" ]

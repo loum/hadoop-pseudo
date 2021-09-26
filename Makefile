@@ -6,7 +6,7 @@ HADOOP_VERSION := 3.3.1
 
 # Tagging convention used: <hadoop-version>-<image-release-number>
 MAKESTER__VERSION = $(HADOOP_VERSION)
-MAKESTER__RELEASE_NUMBER = 2
+MAKESTER__RELEASE_NUMBER = 3
 
 include makester/makefiles/makester.mk
 include makester/makefiles/docker.mk
@@ -15,6 +15,8 @@ include makester/makefiles/python-venv.mk
 UBUNTU_BASE_IMAGE := focal-20210827
 OPENJDK_8_HEADLESS := 8u292-b10-0ubuntu1~20.04
 OPENSSH_SERVER := 1:8.2p1-4ubuntu0.3
+PYTHON3_VERSION := 3.8.10-0ubuntu1~20.04
+PYTHON3_PIP := 20.0.2-5ubuntu1.6
 
 MAKESTER__BUILD_COMMAND = $(DOCKER) build --rm\
  --no-cache\
@@ -22,11 +24,14 @@ MAKESTER__BUILD_COMMAND = $(DOCKER) build --rm\
  --build-arg UBUNTU_BASE_IMAGE=$(UBUNTU_BASE_IMAGE)\
  --build-arg OPENJDK_8_HEADLESS=$(OPENJDK_8_HEADLESS)\
  --build-arg OPENSSH_SERVER=$(OPENSSH_SERVER)\
+ --build-arg PYTHON3_VERSION=$(PYTHON3_VERSION)\
+ --build-arg PYTHON3_PIP=$(PYTHON3_PIP)\
  -t $(MAKESTER__IMAGE_TAG_ALIAS) .
 
 MAKESTER__CONTAINER_NAME := hadoop-pseudo
 MAKESTER__RUN_COMMAND := $(DOCKER) run --rm -d\
  --name $(MAKESTER__CONTAINER_NAME)\
+ --env HDFS_SITE__DFS_REPLICATION=1\
  --publish 9000:9000\
  --publish 9870:9870\
  --publish 8088:8088\
