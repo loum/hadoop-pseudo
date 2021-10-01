@@ -6,13 +6,13 @@ HADOOP_VERSION := 3.3.1
 
 # Tagging convention used: <hadoop-version>-<image-release-number>
 MAKESTER__VERSION = $(HADOOP_VERSION)
-MAKESTER__RELEASE_NUMBER = 3
+MAKESTER__RELEASE_NUMBER = 4
 
 include makester/makefiles/makester.mk
 include makester/makefiles/docker.mk
 include makester/makefiles/python-venv.mk
 
-UBUNTU_BASE_IMAGE := focal-20210827
+UBUNTU_BASE_IMAGE := focal-20210921
 OPENJDK_8_HEADLESS := 8u292-b10-0ubuntu1~20.04
 OPENSSH_SERVER := 1:8.2p1-4ubuntu0.3
 PYTHON3_VERSION := 3.8.10-0ubuntu1~20.04
@@ -49,9 +49,6 @@ backoff:
 	@$(PYTHON) makester/scripts/backoff -d "MapReduce JobHistory Server web UI port" -p 19888 localhost
 
 controlled-run: run backoff
-
-login:
-	@$(DOCKER) exec -ti $(MAKESTER__CONTAINER_NAME) bash || true
 
 hadoop-version:
 	@$(DOCKER) exec -ti $(MAKESTER__CONTAINER_NAME) /opt/hadoop/bin/hadoop version || true
