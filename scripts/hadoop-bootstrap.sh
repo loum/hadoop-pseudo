@@ -5,6 +5,18 @@
 if [ -z "$MAPRED_SITE__MAPREDUCE_FRAMEWORK_NAME" ]; then
     export MAPRED_SITE__MAPREDUCE_FRAMEWORK_NAME=yarn
 fi
+if [ -z "$MAPRED_SITE__YARN_APP_MAPREDUCE_AM_ENV" ]; then
+    export MAPRED_SITE__YARN_APP_MAPREDUCE_AM_ENV=HADOOP_MAPRED_HOME=/opt/hadoop
+fi
+if [ -z "$MAPRED_SITE__MAPREDUCE_MAP_ENV" ]; then
+    export MAPRED_SITE__MAPREDUCE_MAP_ENV=HADOOP_MAPRED_HOME=/opt/hadoop
+fi
+if [ -z "$MAPRED_SITE__MAPREDUCE_REDUCE_ENV" ]; then
+    export MAPRED_SITE__MAPREDUCE_REDUCE_ENV=HADOOP_MAPRED_HOME=/opt/hadoop
+fi
+if [ -z "$MAPRED_SITE__MAPREDUCE_APPLICATION_CLASSPATH" ]; then
+    export MAPRED_SITE__MAPREDUCE_APPLICATION_CLASSPATH=/opt/hadoop/share/hadoop/mapreduce/*:/opt/hadoop/share/hadoop/mapreduce/lib/*
+fi
 
 if [ -z "$CORE_SITE__FS_DEFAULTFS" ]; then
     export CORE_SITE__FS_DEFAULTFS="hdfs://0.0.0.0:9000"
