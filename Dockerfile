@@ -33,7 +33,7 @@ RUN wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.12.60/aws-j
 FROM ubuntu:$UBUNTU_BASE_IMAGE
 
 ARG OPENSSH_SERVER
-ARG OPENJDK_8_HEADLESS
+ARG OPENJDK_11_HEADLESS
 ARG PYTHON3_VERSION
 ARG PYTHON3_PIP
 RUN apt-get update && apt-get install -y --no-install-recommends\
@@ -41,7 +41,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
  python3-pip=$PYTHON3_PIP\
  python-is-python3\
  openssh-server=$OPENSSH_SERVER\
- openjdk-8-jdk-headless=$OPENJDK_8_HEADLESS &&\
+ openjdk-11-jdk-headless=$OPENJDK_11_HEADLESS &&\
  rm -rf /var/lib/apt/lists/*
 
 ARG HADOOP_VERSION
