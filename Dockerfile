@@ -10,9 +10,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ARG HADOOP_VERSION
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+WORKDIR  /tmp
 RUN wget -qO-\
  http://apache.mirror.serversaustralia.com.au/hadoop/core/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz |\
- tar -C /tmp -xzf - 
+ tar -xzf - 
 
 # AWS S3 jar.  You need to match Hadoop version with the jar files.
 WORKDIR /tmp/jars
@@ -43,6 +44,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
  openssh-server=$OPENSSH_SERVER\
  openjdk-11-jdk-headless=$OPENJDK_11_HEADLESS &&\
  rm -rf /var/lib/apt/lists/*
+
+RUN python -m pip install --user --no-cache-dir --upgrade pip
+RUN python -m pip install --user --no-cache-dir awscli
 
 ARG HADOOP_VERSION
 ARG HADOOP_HOME=/opt/hadoop
