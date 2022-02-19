@@ -20,14 +20,14 @@ WORKDIR /tmp/jars
 RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar
 
 # Other jars needed for s3a connectors.
-RUN wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.12.60/aws-java-sdk-1.12.60.jar &&\
- wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-core/1.12.60/aws-java-sdk-core-1.12.60.jar &&\
- wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-dynamodb/1.12.60/aws-java-sdk-dynamodb-1.12.60.jar &&\
- wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-s3/1.12.60/aws-java-sdk-s3-1.12.60.jar &&\
- wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-s3/1.12.60/aws-java-sdk-s3-1.12.60.jar &&\
- wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-sts/1.12.60/aws-java-sdk-sts-1.12.60.jar &&\
- wget https://repo1.maven.org/maven2/joda-time/joda-time/2.10.5/joda-time-2.10.5.jar &&\
- wget https://repo1.maven.org/maven2/org/apache/httpcomponents/httpclient/4.5.11/httpclient-4.5.11.jar
+ARG MAVEN_REPO=https://repo1.maven.org/maven2
+RUN\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-core/1.12.154/aws-java-sdk-core-1.12.154.jar &&\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-dynamodb/1.12.154/aws-java-sdk-dynamodb-1.12.154.jar &&\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-s3/1.12.153/aws-java-sdk-s3-1.12.153.jar &&\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-sts/1.12.153/aws-java-sdk-sts-1.12.153.jar &&\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk/1.12.153/aws-java-sdk-1.12.153.jar &&\
+ wget $MAVEN_REPO/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar
 
 ### downloader layer end
 

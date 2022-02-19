@@ -6,13 +6,13 @@ HADOOP_VERSION := 3.3.1
 
 # Tagging convention used: <hadoop-version>-<image-release-number>
 MAKESTER__VERSION = $(HADOOP_VERSION)
-MAKESTER__RELEASE_NUMBER = 7
+MAKESTER__RELEASE_NUMBER = 8
 
 include makester/makefiles/makester.mk
 include makester/makefiles/docker.mk
 include makester/makefiles/python-venv.mk
 
-UBUNTU_BASE_IMAGE := focal-20220105
+UBUNTU_BASE_IMAGE := focal-20220113
 OPENJDK_11_HEADLESS := 11.0.13+8-0ubuntu1~20.04
 OPENSSH_SERVER := 1:8.2p1-4ubuntu0.4
 PYTHON3_VERSION := 3.8.10-0ubuntu1~20.04.2
@@ -55,7 +55,6 @@ hadoop-version:
 
 help: makester-help docker-help python-venv-help
 	@echo "(Makefile)\n\
-  login                Login to container $(MAKESTER__CONTAINER_NAME) as user \"hdfs\"\n\
   hadoop-version       Hadoop version in running container $(MAKESTER__CONTAINER_NAME)\"\n"
 
 .PHONY: help
