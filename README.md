@@ -64,7 +64,7 @@ When you are ready to build the image:
 make build-image
 ```
 #### Configuration
-Every Hadoop configuration settings can be overridden during container startup by tagetting the setting name an prepending the configuration file context as per the following:
+Every Hadoop configuration setting can be overridden during container startup by targeting the setting name and prepending the configuration file context as per the following:
 - [Hadoop core-default.xml](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/core-default.xml) | Override with `CORE_SITE__<setting>`
 - [Hadoop hdfs-default.xml](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml) | Override token `HDFS_SITE__<setting>`
 - [Hadoop mapred-default.xml](https://hadoop.apache.org/docs/stable/hadoop-mapreduce-client/hadoop-mapreduce-client-core/mapred-default.xml) | Override with `MAPRED_SITE__<setting>`
