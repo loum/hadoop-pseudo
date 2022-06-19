@@ -38,7 +38,7 @@ ARG OPENJDK_11_HEADLESS
 ARG PYTHON3_VERSION
 ARG PYTHON3_PIP
 RUN apt-get update && apt-get install -y --no-install-recommends\
- python3.8=$PYTHON3_VERSION\
+ python3.10=$PYTHON3_VERSION\
  python3-pip=$PYTHON3_PIP\
  python-is-python3\
  openssh-server=$OPENSSH_SERVER\
