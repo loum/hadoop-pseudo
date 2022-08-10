@@ -2,7 +2,7 @@
 
 MAKESTER__REPO_NAME := loum
 
-HADOOP_VERSION := 3.3.3
+HADOOP_VERSION := 3.3.4
 
 # Tagging convention used: <hadoop-version>-<image-release-number>
 MAKESTER__VERSION = $(HADOOP_VERSION)
@@ -12,20 +12,14 @@ include makester/makefiles/makester.mk
 include makester/makefiles/docker.mk
 include makester/makefiles/python-venv.mk
 
-UBUNTU_BASE_IMAGE := jammy-20220531
-OPENJDK_11_HEADLESS := 11.0.15+10-0ubuntu0.22.04.1
+UBUNTU_BASE_IMAGE := loum/pyspark-helper:python3.10-openjdk11
 OPENSSH_SERVER := 1:8.9p1-3
-PYTHON3_VERSION := 3.10.4-3
-PYTHON3_PIP := 22.0.2+dfsg-1
 
 MAKESTER__BUILD_COMMAND = $(DOCKER) build --rm\
  --no-cache\
  --build-arg HADOOP_VERSION=$(HADOOP_VERSION)\
  --build-arg UBUNTU_BASE_IMAGE=$(UBUNTU_BASE_IMAGE)\
- --build-arg OPENJDK_11_HEADLESS=$(OPENJDK_11_HEADLESS)\
  --build-arg OPENSSH_SERVER=$(OPENSSH_SERVER)\
- --build-arg PYTHON3_VERSION=$(PYTHON3_VERSION)\
- --build-arg PYTHON3_PIP=$(PYTHON3_PIP)\
  -t $(MAKESTER__IMAGE_TAG_ALIAS) .
 
 MAKESTER__CONTAINER_NAME := hadoop-pseudo
