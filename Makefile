@@ -1,54 +1,61 @@
 .DEFAULT_GOAL := help
 
+MAKESTER__INCLUDES := py docker versioning
 MAKESTER__REPO_NAME := loum
 
+include makester/makefiles/makester.mk
+
+#
+# Makester overrides.
+#
+# Container image build.
 HADOOP_VERSION := 3.3.4
+UBUNTU_BASE_IMAGE := loum/pyjdk:python3.10-openjdk11
+OPENSSH_SERVER := 1:8.9p1-3ubuntu0.1
 
 # Tagging convention used: <hadoop-version>-<image-release-number>
-MAKESTER__VERSION = $(HADOOP_VERSION)
-MAKESTER__RELEASE_NUMBER = 1
+MAKESTER__VERSION := $(HADOOP_VERSION)
+MAKESTER__RELEASE_NUMBER := 1
 
-include makester/makefiles/makester.mk
-include makester/makefiles/docker.mk
-include makester/makefiles/python-venv.mk
+MAKESTER__IMAGE_TARGET_TAG := $(MAKESTER__RELEASE_VERSION)
 
-UBUNTU_BASE_IMAGE := loum/pyspark-helper:python3.10-openjdk11
-OPENSSH_SERVER := 1:8.9p1-3
-
-MAKESTER__BUILD_COMMAND = $(DOCKER) build --rm\
- --no-cache\
+MAKESTER__BUILD_COMMAND = --rm --no-cache\
  --build-arg HADOOP_VERSION=$(HADOOP_VERSION)\
  --build-arg UBUNTU_BASE_IMAGE=$(UBUNTU_BASE_IMAGE)\
  --build-arg OPENSSH_SERVER=$(OPENSSH_SERVER)\
  -t $(MAKESTER__IMAGE_TAG_ALIAS) .
 
 MAKESTER__CONTAINER_NAME := hadoop-pseudo
-MAKESTER__RUN_COMMAND := $(DOCKER) run --rm -d\
+MAKESTER__RUN_COMMAND := $(MAKESTER__DOCKER) run --rm -d\
  --name $(MAKESTER__CONTAINER_NAME)\
  --env HDFS_SITE__DFS_REPLICATION=1\
  --publish 9000:9000\
  --publish 9870:9870\
  --publish 8088:8088\
  --publish 19888:19888\
- $(MAKESTER__SERVICE_NAME):$(HASH)
+ $(MAKESTER__IMAGE_TAG_ALIAS)
 
-MAKESTER__IMAGE_TARGET_TAG = $(HASH)
-
-init: clear-env makester-requirements
+#
+# Local Makefile targets.
+#
+# Initialise the development environment.
+init: py-venv-clear py-venv-init py-install-makester
 
 backoff:
-	@$(PYTHON) makester/scripts/backoff -d "Hadoop NameNode port" -p 9000 localhost
-	@$(PYTHON) makester/scripts/backoff -d "Hadoop NameNode web UI port" -p 9870 localhost
-	@$(PYTHON) makester/scripts/backoff -d "YARN ResourceManager web UI port" -p 8088 localhost
-	@$(PYTHON) makester/scripts/backoff -d "MapReduce JobHistory Server web UI port" -p 19888 localhost
+	@venv/bin/makester backoff $(MAKESTER__LOCAL_IP) 9000 --detail "Hadoop NameNode port"
+	@venv/bin/makester backoff $(MAKESTER__LOCAL_IP) 9870 --detail "Hadoop NameNode web UI port"
+	@venv/bin/makester backoff $(MAKESTER__LOCAL_IP) 8088 --detail "YARN ResourceManager web UI port"
+	@venv/bin/makester backoff $(MAKESTER__LOCAL_IP) 19888 --detail "MapReduce JobHistory Server web UI port"
 
-controlled-run: run backoff
+controlled-run: container-run backoff
 
 hadoop-version:
-	@$(DOCKER) exec -ti $(MAKESTER__CONTAINER_NAME) /opt/hadoop/bin/hadoop version || true
+	@$(MAKESTER__DOCKER) exec -ti $(MAKESTER__CONTAINER_NAME) /opt/hadoop/bin/hadoop version || true
 
-help: makester-help docker-help python-venv-help
+help: makester-help
 	@echo "(Makefile)\n\
-  hadoop-version       Hadoop version in running container $(MAKESTER__CONTAINER_NAME)\"\n"
+  controlled-run       Start container \"$(MAKESTER__CONTAINER_NAME)\" on $(MAKESTER__IMAGE_TAG_ALIAS) and wait for all Hadoop services\n\
+  hadoop-version       Display the Hadoop version in running container \"$(MAKESTER__CONTAINER_NAME)\"\n\
+  init                 Build the local development environment\n"
 
 .PHONY: help

@@ -19,7 +19,7 @@ ARG HADOOP_VERSION
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 WORKDIR  /tmp
 RUN wget -qO-\
- http://apache.mirror.serversaustralia.com.au/hadoop/core/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz |\
+ https://dlcdn.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz |\
  tar -xzf - 
 
 # AWS S3 jar.  You need to match Hadoop version with the jar files.
@@ -29,12 +29,12 @@ RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/$HADOOP_VER
 # Other jars needed for s3a connectors.
 ARG MAVEN_REPO=https://repo1.maven.org/maven2
 RUN\
- wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-core/1.12.276/aws-java-sdk-core-1.12.276.jar &&\
- wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-dynamodb/1.12.276/aws-java-sdk-dynamodb-1.12.276.jar &&\
- wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-s3/1.12.153/aws-java-sdk-s3-1.12.153.jar &&\
- wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-sts/1.12.276/aws-java-sdk-sts-1.12.276.jar &&\
- wget $MAVEN_REPO/com/amazonaws/aws-java-sdk/1.12.276/aws-java-sdk-1.12.276.jar &&\
- wget $MAVEN_REPO/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-core/1.12.425/aws-java-sdk-core-1.12.425.jar &&\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-dynamodb/1.12.425/aws-java-sdk-dynamodb-1.12.425.jar &&\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-s3/1.12.425/aws-java-sdk-s3-1.12.425.jar &&\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk-sts/1.12.425/aws-java-sdk-sts-1.12.425.jar &&\
+ wget $MAVEN_REPO/com/amazonaws/aws-java-sdk/1.12.425/aws-java-sdk-1.12.425.jar &&\
+ wget $MAVEN_REPO/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar
 
 ### builder layer end
 
