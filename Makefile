@@ -9,7 +9,7 @@ include makester/makefiles/makester.mk
 # Makester overrides.
 #
 # Container image build.
-export HADOOP_VERSION := 3.3.5
+export HADOOP_VERSION := 3.3.6
 export UBUNTU_BASE_IMAGE := loum/pyjdk:python3.11-openjdk11
 export OPENSSH_SERVER := 1:8.9p1-3ubuntu0.3
 
