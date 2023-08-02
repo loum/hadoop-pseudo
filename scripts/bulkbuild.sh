@@ -2,7 +2,7 @@
 #
 LATEST_HADOOP_VERSION=$HADOOP_VERSION
 
-for HADOOP_VERSION in 3.3.1 3.3.2 3.3.3 3.3.4 3.3.5
+for HADOOP_VERSION in 3.3.1 3.3.2 3.3.3 3.3.4 3.3.5 3.3.6
 do
     CMD="docker buildx build --platform linux/arm64,linux/amd64
  --push --rm --no-cache
